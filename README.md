@@ -31,6 +31,50 @@ observer.observe(document.body, { childList: true, subtree: true });
 
 
 
+------------------------- New Code ----------------------------------------
+(() => {
+  console.log("Auto-clicker started");
+
+  const clickedElements = new WeakSet();
+
+  const clickElement = (el, label) => {
+    if (clickedElements.has(el)) return;
+
+    clickedElements.add(el);
+
+    el.dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
+    el.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
+    el.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+
+    console.log(`${label} clicked`);
+  };
+
+  const observer = new MutationObserver(() => {
+
+    // 🔹 Upgrade popup button
+    document.querySelectorAll("button").forEach(btn => {
+      if (btn.textContent.trim() === "Upgrade") {
+        clickElement(btn, "Upgrade");
+      }
+    });
+
+    // 🔹 Remove All Bookmarks button
+    document.querySelectorAll("button.ndy_twitter_bkmk_rm_btn").forEach(btn => {
+      if (btn.textContent.trim() === "Remove All Bookmarks") {
+        clickElement(btn, "Remove All Bookmarks");
+      }
+    });
+
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+})();
+
+
 ------------------------------------------------------------------
 
 Open the browser developer console (F12 > Console tab).
