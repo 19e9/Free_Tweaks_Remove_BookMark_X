@@ -32,6 +32,7 @@ observer.observe(document.body, { childList: true, subtree: true });
 
 
 ------------------------- New Code ----------------------------------------
+
 (() => {
   console.log("Auto-clicker started");
 
